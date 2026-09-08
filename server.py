@@ -89,6 +89,17 @@ async def chat_stream(req: ChatStreamRequest, x_gemini_api_key: Optional[str] = 
 def inspect_sql_tables():
     return db.get_sql_tables_inspection()
 
+@app.get("/api/download/pdf")
+def download_architecture_pdf():
+    pdf_path = os.path.join(os.path.dirname(__file__), "AI_Chatbot_Architecture_Documentation.pdf")
+    if not os.path.exists(pdf_path):
+        raise HTTPException(status_code=404, detail="PDF documentation not found.")
+    return FileResponse(
+        pdf_path, 
+        media_type="application/pdf", 
+        filename="AI_Chatbot_Architecture_Documentation.pdf"
+    )
+
 @app.get("/api/stats")
 def get_stats():
     return db.get_db_stats()
