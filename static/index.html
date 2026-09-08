@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot - LangChain & SQLite Memory</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Marked.js & Highlight.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="logo">
+          <i class="fa-solid fa-sparkles"></i>
+          <span>AI Chatbot</span>
+        </div>
+        <button class="btn-new-chat" id="btn-new-chat">
+          <i class="fa-solid fa-plus"></i> New Chat
+        </button>
+      </div>
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="input-search" placeholder="Search chats...">
+      </div>
+
+      <div class="session-list" id="session-list">
+        <!-- Sessions rendered here -->
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="btn-sql" id="btn-open-sql">
+          <i class="fa-solid fa-database"></i> SQL Inspector
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Chat View -->
+    <main class="chat-view">
+      <header class="header">
+        <div class="header-left">
+          <h2 id="current-title">New Chat</h2>
+        </div>
+        <div class="header-right">
+          <div class="api-key-box" title="Gemini API Key">
+            <i class="fa-solid fa-key"></i>
+            <input type="password" id="input-key" placeholder="API Key (optional)">
+          </div>
+          <button class="btn-header-action" id="btn-clear-history" title="Clear Chat History">
+            <i class="fa-solid fa-trash-can"></i> Clear
+          </button>
+        </div>
+      </header>
+
+      <!-- Chat Feed -->
+      <div class="feed" id="feed">
+        <!-- Messages rendered here -->
+      </div>
+
+      <!-- Input Area -->
+      <div class="input-area">
+        <div class="input-box">
+          <textarea id="prompt-input" placeholder="Type a message... (Press Enter to send)" rows="1"></textarea>
+          <button id="btn-send" class="btn-send-icon">
+            <i class="fa-solid fa-arrow-up"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- SQL Memory Inspector Modal -->
+  <div class="modal-overlay hidden" id="modal-sql">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-database"></i> SQLite Memory Store</h3>
+        <button class="btn-close" id="btn-close-sql"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-tabs">
+        <button class="tab-btn active" data-tab="tab-msgs">Messages (<span id="msg-count">0</span>)</button>
+        <button class="tab-btn" data-tab="tab-sess">Sessions (<span id="sess-count">0</span>)</button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-pane active" id="tab-msgs">
+          <table class="data-table" id="table-msgs">
+            <thead>
+              <tr><th>ID</th><th>Session</th><th>Role</th><th>Content</th><th>Time</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab-sess">
+          <table class="data-table" id="table-sess">
+            <thead>
+              <tr><th>ID</th><th>Title</th><th>Created At</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
