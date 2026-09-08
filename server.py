@@ -100,6 +100,17 @@ def download_architecture_pdf():
         filename="AI_Chatbot_Architecture_Documentation.pdf"
     )
 
+@app.get("/api/download/zip")
+def download_windows_zip():
+    zip_path = os.path.join(os.path.dirname(__file__), "AI-Chatbot-Windows.zip")
+    if not os.path.exists(zip_path):
+        raise HTTPException(status_code=404, detail="ZIP package not found.")
+    return FileResponse(
+        zip_path, 
+        media_type="application/zip", 
+        filename="AI-Chatbot-Windows.zip"
+    )
+
 @app.get("/api/stats")
 def get_stats():
     return db.get_db_stats()
